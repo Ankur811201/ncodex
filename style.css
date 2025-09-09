@@ -1,0 +1,109 @@
+ * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      padding-inline: 40px;
+      height: 40px;
+      background: linear-gradient(90deg, #79abf6, #4e8ce6);
+      align-items: center;
+      color: white;
+      font-weight: bold;
+    }
+    ul{text-decoration: none;list-style: none;}
+    iframe{  width: 100vw;        /* fake laptop width */
+  height: 120vh;        /* fake laptop height */
+  transform: scale(0.66);   /* 188/310 approx */
+  transform-origin: top left;
+  border: none;
+  position: absolute;
+  cursor: pointer;
+    
+    
+    }
+
+    textarea{width: 100%;}
+    .edit-funtion > div {overflow-y: scroll;}
+    .sec-nav{ display: flex;
+      
+      height: 100%;
+      padding-top: 20px;
+      
+      flex-direction: column;
+      
+      background: linear-gradient(90deg, #98bef7, #4289f2);
+      align-items: center;
+      color: white;
+      font-weight: bold;}
+      .sec-nav li{padding-block: 20px;}
+
+    .root {
+      display: flex;
+      flex: 1;
+      width: 100%;
+    }
+
+    .root div {
+      border: 2px solid #ccc;
+    }
+
+    .edit-funtion {
+      width: 30vw;
+      background: #f7f9fc;
+      display: flex;
+      flex-direction: column;
+      gap:5px;
+      padding: 5px;
+    }
+
+    .edit-funtion div {
+      flex: 1;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 10px;
+    }
+    .edit-funtion div h3 {  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      background:#ddd ;
+
+    }
+
+    .display-web {
+      width: 70vw;
+      display: flex;
+      flex-direction: column;
+      padding: 4px;
+      gap: 4px;
+      background: #fafafa;
+    }
+
+    .display-web .ele-selector {
+      height: 40px;
+      background: #fff;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .display-web .show-web {
+      flex: 1;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      padding: 5px;
+    }
+    #pageList button{padding-inline:10px;margin-inline: 10px;}
