@@ -3,6 +3,7 @@ const container = document.getElementById("showDataEdit");
 const saveBtn = document.getElementById("saveBtn");
 const downloadBtn = document.getElementById("downloadBtn");
 const pageListDiv = document.getElementById("pageList");
+const fileName =document.getElementById('filename');
 
 let fileMap = {}; // path -> File
 let blobToPathMap = new Map(); // blobURL -> original path
@@ -11,6 +12,30 @@ let htmlContentMap = {}; // path -> preprocessed HTML content
 let savedPages = new Map(); // path -> edited HTML
 let currentPagePath = "";
 let currentEdits = new Map(); // path -> edited HTML for unsaved changes
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+    } else if (prefersDarkScheme) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+
+
 
 // Normalize paths for matching
 function normalizePath(path) {
@@ -70,6 +95,8 @@ async function processHTML(path) {
 
 // Load HTML in iframe
 function loadHTML(path) {
+    fileName.innerText= path.substring(path.lastIndexOf("/") + 1);
+
     currentPagePath = path;
     const html = currentEdits.get(path) || htmlContentMap[path];
     if (!html) return;
@@ -77,6 +104,7 @@ function loadHTML(path) {
 
     iframe.onload = () => {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
+        saveBtn.click();
 
         // Clear old handler
         if (doc.body._clickHandler) {
@@ -115,14 +143,16 @@ function loadHTML(path) {
         // Navigation links
         doc.querySelectorAll("a").forEach(a => {
             a.addEventListener("click", e => {
-                const rel = a.getAttribute("data-relpath");
-                if (!rel) return;
-                e.preventDefault();
-                const key = Object.keys(fileMap).find(k => normalizePath(k).endsWith(normalizePath(rel)));
-                if (key) {
-                    currentEdits.set(currentPagePath, doc.documentElement.outerHTML);
-                    loadHTML(key);
-                }
+                 e.preventDefault();
+
+                // const rel = a.getAttribute("data-relpath");
+                // if (!rel) return;
+                // e.preventDefault();
+                // const key = Object.keys(fileMap).find(k => normalizePath(k).endsWith(normalizePath(rel)));
+                // if (key) {
+                //     currentEdits.set(currentPagePath, doc.documentElement.outerHTML);
+                //     loadHTML(key);
+                // }
             });
         });
     };
@@ -146,15 +176,19 @@ function loadHTML(path) {
     }
 
     function createImageEditor(el, src, type, container, doc) {
-        const div = document.createElement('div');
-        div.style.marginBottom = '20px';
+       
 
         const preview = document.createElement('img');
         preview.src = src;
-        preview.style.cssText = 'max-width:100%;margin-bottom:10px;border:1px solid #ccc;';
+        preview.style.cssText = 'max-width:100px;margin:5px;border:1px solid #272727ff;';
+
+        preview.addEventListener('click', () => {
+        input.click(); // Opens file chooser
+        });
 
         const input = document.createElement('input');
         input.type = 'file';
+        input.style.display='none';
         input.accept = 'image/*';
         input.addEventListener('change', ev => {
             const file = ev.target.files[0];
@@ -172,8 +206,8 @@ function loadHTML(path) {
             }
         });
 
-        div.append(preview, input);
-        container.appendChild(div);
+        
+        container.appendChild(preview);
     }
 
     function getTextNodes(node) {
@@ -187,6 +221,30 @@ function loadHTML(path) {
 }
 
 
+function editfun(a,b,el){
+    document.getElementById(b).style.display='none';
+    document.getElementById(a).style.display='grid';
+    document.querySelector('.text').classList.remove('active');
+    document.querySelector('.img').classList.remove('active');
+    el.classList.add('active');
+    
+    
+    
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -197,11 +255,12 @@ function checkDownloadStatus() {
     const allSaved = allPages.every(path =>
         !currentEdits.has(path) || savedPages.has(path)
     );
-    downloadBtn.disabled = !allSaved;
+    
 }
 
 // Folder upload handler
 document.getElementById("folderInput").addEventListener("change", async (e) => {
+  
     const files = e.target.files;
     for (let file of files) fileMap[file.webkitRelativePath] = file;
 
@@ -210,15 +269,21 @@ document.getElementById("folderInput").addEventListener("change", async (e) => {
 
     pageListDiv.innerHTML = "";
     Object.keys(htmlContentMap).forEach(p => {
-        const btn = document.createElement('button');
+        const btn = document.createElement('div');
         btn.textContent = p.substring(p.lastIndexOf("/") + 1);
-        btn.addEventListener('click', () => loadHTML(p));
+     btn.addEventListener('click', function() {
+    document.querySelectorAll('#pageList > div').forEach(d => d.classList.remove('activeFile'));
+    this.classList.add('activeFile');
+    loadHTML(p);
+});
+
+
         pageListDiv.appendChild(btn);
     });
 
     const indexFile = Object.keys(fileMap).find(f => f.toLowerCase().endsWith("index.html"));
     if (indexFile) loadHTML(indexFile);
-    saveBtn.disabled = false;
+    
 });
 
 // Save button handler
@@ -227,11 +292,12 @@ saveBtn.addEventListener("click", () => {
     const editedHTML = doc.documentElement.outerHTML;
     savedPages.set(currentPagePath, editedHTML);
     alert(currentPagePath + " saved successfully!");
-    checkDownloadStatus();
+    
 });
 
 // Download button handler
 downloadBtn.addEventListener("click", async () => {
+    saveBtn.click();
     const zip = new JSZip();
     const rootFolderName = Object.keys(fileMap)[0].split("/")[0] || "website";
     const folder = zip.folder(rootFolderName);

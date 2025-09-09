@@ -1,4 +1,89 @@
- * {
+:root{
+ --main-color:linear-gradient(90deg, #3b5987, #4e8ce6);
+
+ --sec-color-dark:#20235a;
+ --text-color:black;
+ --bg-color:white;
+
+}
+[data-theme="dark"] {
+  --main-color:linear-gradient(90deg, #20232a,#333);
+  --sec-color-dark:#20232a;
+  --text-color:white;
+  --bg-color:#dddddd;
+
+
+    }
+
+    .theme-toggle {
+      all: unset;
+      cursor: pointer;
+     
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      color: var(--text-color);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .sun-and-moon {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s ease;
+    }
+    .moon{display: none;
+      scale: 0.5;
+      rotate: -20deg;
+    
+    }
+    
+
+    [data-theme="dark"] .sun-and-moon {
+      display: none;
+    }
+       [data-theme="dark"] .moon{
+        display: block;
+       }
+
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+/* For Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+    border: 2px solid #f1f1f1;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+
+
+
+
+
+
+
+* {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -9,6 +94,8 @@
       font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
+      transition: background 0.4s;
+      background: var(--bg-color);
     }
 
     nav {
@@ -16,24 +103,25 @@
       justify-content: space-between;
       padding-inline: 40px;
       height: 40px;
-      background: linear-gradient(90deg, #79abf6, #4e8ce6);
+      background: var(--main-color);
       align-items: center;
       color: white;
       font-weight: bold;
+      overflow: hidden;
     }
     ul{text-decoration: none;list-style: none;}
     iframe{  width: 100vw;        /* fake laptop width */
   height: 120vh;        /* fake laptop height */
-  transform: scale(0.66);   /* 188/310 approx */
+  transform: scale(0.675);   /* 188/310 approx */
   transform-origin: top left;
   border: none;
   position: absolute;
   cursor: pointer;
-    
+    background: var(--bg-color);
     
     }
 
-    textarea{width: 100%;}
+    
     .edit-funtion > div {overflow-y: scroll;}
     .sec-nav{ display: flex;
       
@@ -42,7 +130,7 @@
       
       flex-direction: column;
       
-      background: linear-gradient(90deg, #98bef7, #4289f2);
+      background: var(--main-color);
       align-items: center;
       color: white;
       font-weight: bold;}
@@ -52,32 +140,56 @@
       display: flex;
       flex: 1;
       width: 100%;
+      max-height: 95vh;
     }
 
-    .root div {
-      border: 2px solid #ccc;
+    .root >div > div{box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      
     }
 
     .edit-funtion {
       width: 30vw;
-      background: #f7f9fc;
+      
       display: flex;
       flex-direction: column;
       gap:5px;
-      padding: 5px;
+      
+      position: relative;
     }
+    .edit-funtion button {
+    padding: 5px 10px;
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-inline: 2px;
+}
+.edit-funtion button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
 
-    .edit-funtion div {
+.edit-funtion button.active {
+      background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); 
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+    .edit-funtion > div {
       flex: 1;
-      background: #fff;
+      
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 10px;
+      
+      padding: 1px;
     }
-    .edit-funtion div h3 {  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      background:#ddd ;
+    .edit-funtion >div h3 {   background: var(--main-color); color: white;
+     position:sticky;top: 0px;padding-top: 4px;padding-inline-start: 1px;
 
     }
+    
 
     .display-web {
       width: 70vw;
@@ -85,25 +197,86 @@
       flex-direction: column;
       padding: 4px;
       gap: 4px;
-      background: #fafafa;
+      position: relative;
+     
     }
 
     .display-web .ele-selector {
-      height: 40px;
-      background: #fff;
+      height: 30px;
+      
       border-radius: 6px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      justify-content: space-around;
+      
+      
     }
 
     .display-web .show-web {
       flex: 1;
-      background: white;
+      background: var(--bg-color);
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      padding: 5px;
+      
+      padding: 2px;
+    }
+
+
+    #showimg{
+      display:none;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 5px;
     }
     #pageList button{padding-inline:10px;margin-inline: 10px;}
+    #showDataEdit{padding-block: 5px;}
+
+    #showDataEdit textarea{margin-block: 2px;width: 97%;margin-inline: 5px;
+      padding-inline: 3px;max-width:100%;
+        resize: vertical;  /* only horizontal resize */
+   
+    }
+    /* Parent container */
+#pageList {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 250px;
+  padding: 5px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  font-family: sans-serif;
+  position: absolute;
+  left: -5px;
+  z-index: 100;
+  padding: 4px;
+}
+
+/* Child divs */
+#pageList > div {
+  
+
+  border-radius: 2px;
+  background-color: #fff;
+  cursor: pointer;
+ 
+ 
+}
+
+#pageList > div:hover {
+  background-color: #e0e0e0;
+}
+
+
+#pageList > div.activeFile {
+    background-color: #333;
+    color: #fff;
+}
+.filebox{
+  cursor: pointer;
+  font-size: 15px;
+  position: relative;
+}
+.filebox:hover #pageList {
+    display: flex;
+}
+    
