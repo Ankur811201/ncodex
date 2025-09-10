@@ -207,6 +207,7 @@
       border-radius: 6px;
       display: flex;
       align-items: center;
+      flex-direction: row;
       justify-content: space-around;
       
       
@@ -279,4 +280,10 @@
 .filebox:hover #pageList {
     display: flex;
 }
-    
+
+.textarea-box{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  
+}

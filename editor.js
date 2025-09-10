@@ -4,6 +4,7 @@ const saveBtn = document.getElementById("saveBtn");
 const downloadBtn = document.getElementById("downloadBtn");
 const pageListDiv = document.getElementById("pageList");
 const fileName =document.getElementById('filename');
+const Elementtarget =document.querySelector('.element-target');
 
 let fileMap = {}; // path -> File
 let blobToPathMap = new Map(); // blobURL -> original path
@@ -12,6 +13,8 @@ let htmlContentMap = {}; // path -> preprocessed HTML content
 let savedPages = new Map(); // path -> edited HTML
 let currentPagePath = "";
 let currentEdits = new Map(); // path -> edited HTML for unsaved changes
+let currentTextSelection = null;
+let oldTextSelection = null;
 
     const themeToggle = document.getElementById('theme-toggle');
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -117,16 +120,61 @@ function loadHTML(path) {
             const showImg = document.getElementById('showimg');
             showImg.innerHTML = "";
             container.innerHTML = "";
+            Elementtarget.innerHTML=parent.tagName.toLowerCase() +' | '+(parent.className ||'no-class')+' | '+ (parent.id || 'no-id');
 
             // Collect images and backgrounds
             const elements = collectElements(parent, doc);
+            let textNodes = getTextNodes(parent);
 
             elements.forEach(({ el, src, type }) => {
                 createImageEditor(el, src, type, showImg, doc);
             });
 
             // Handle text editing
-            getTextNodes(parent).forEach(tn => {
+            getTextNodes(parent).forEach((tn,index) => {
+                const div = document.createElement('div');
+            div.className = 'textarea-box';
+                const checkbox = document.createElement('input');
+                checkbox.type = 'radio';
+                checkbox.name = 'edit-type';
+
+                   checkbox.addEventListener('change', () => {
+
+                      let tag = tn.parentNode; // target element
+
+        if (checkbox.checked) {
+            // Restore previous selection if any
+            if (currentTextSelection && oldTextSelection !== null) {
+                currentTextSelection.style.outline = oldTextSelection;
+            }
+
+            // Store current selection and its old style
+            currentTextSelection = tag;
+            oldTextSelection = tag.style.outline;
+
+            // Apply new style
+            tag.style.outline = '2px solid blue';
+
+            console.log('Radio checked for:', tag.textContent.trim());
+        } else {
+            // When deselected, restore old style
+            if (currentTextSelection === tag && oldTextSelection !== null) {
+                tag.style.outline = oldTextSelection;
+                console.log('Radio unchecked, style restored.');
+            }
+        }
+    
+        
+
+
+
+
+    });
+
+
+
+
+
                 const input = document.createElement('textarea');
                 input.value = tn.textContent.replace(/\s+/g, ' ').trim();
                 input.addEventListener('input', () => {
@@ -134,7 +182,15 @@ function loadHTML(path) {
                     currentEdits.set(currentPagePath, doc.documentElement.outerHTML);
                     checkDownloadStatus();
                 });
-                container.appendChild(input);
+
+                  if (textNodes.length === 1) {
+        checkbox.checked = true;
+        checkbox.dispatchEvent(new Event('change'));
+    }
+                
+                div.appendChild(input);
+                div.appendChild(checkbox);
+                container.appendChild(div);
             });
         };
 
