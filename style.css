@@ -136,7 +136,7 @@
     }
     .iframeload{
       height: 100%;width: 100%;
-      position: absolute;background: rgb(195, 255, 212);
+      position: absolute;background:#ecf3fd;
       top: 0;
       left: 0;
       z-index: 10;
@@ -161,12 +161,15 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
             text-align: center;
             height: 80%;
+            border: 5px dashed #ddd;
            
         }
        .before-upload   .illustration {
             width: 120px;
             margin-bottom: 20px;
             opacity: 0.7;
+            fill:#6587ba;
+            
         }
        .before-upload   h1 {
             margin-bottom: 12px;

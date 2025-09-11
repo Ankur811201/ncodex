@@ -17,6 +17,7 @@ const errorUpload =document.querySelector('.error-container');
 let fileMap = {}; // path -> File
 let blobToPathMap = new Map(); // blobURL -> original path
 let cssBlobToPathMap = new Map(); // blobURL -> original path for CSS
+let cssBlobToOriginalRefMap = new Map(); // blobURL -> original CSS url(...) reference
 let htmlContentMap = {}; // path -> preprocessed HTML content
 let savedPages = new Map(); // path -> edited HTML
 let currentPagePath = "";
@@ -74,6 +75,7 @@ async function processCSS(path) {
         if (key) {
             const blobURL = replaceWithBlobURL(key);
             cssBlobToPathMap.set(blobURL, key);
+            cssBlobToOriginalRefMap.set(blobURL, p); // Store the original CSS reference
             return `url(${blobURL})`;
         }
         return match;
@@ -458,11 +460,20 @@ downloadBtn.addEventListener("click", async () => {
                 if (!originalPath) return match;
                 return originalPath.slice(rootFolderName.length + 1);
             });
-            html = html.replace(/url\((blob:[^)]+)\)/g, (m, b) => {
-                const orig = cssBlobToPathMap.get(b);
-                return `url(${orig ? orig.slice(rootFolderName.length + 1) : b})`;
+            html = html.replace(/url\((['"]?)(blob:[^)'" ]+)\1\)/g, (match, quote, blobUrl) => {
+                const orig = cssBlobToPathMap.get(blobUrl);
+                const newUrl = orig ? orig.slice(rootFolderName.length + 1) : blobUrl;
+                return `url(${newUrl})`;
             });
             subFolder.file(parts[parts.length - 1], html);
+        } else if (path.endsWith('.css')) {
+            let text = await fileMap[path].text();
+            text = text.replace(/url\((['"]?)(blob:[^)'" ]+)\1\)/g, (match, quote, blobUrl) => {
+                // Use the original CSS reference if available
+                const origRef = cssBlobToOriginalRefMap.get(blobUrl);
+                return origRef ? `url(${origRef})` : match;
+            });
+            subFolder.file(parts[parts.length - 1], text);
         } else {
             subFolder.file(parts[parts.length - 1], fileMap[path]);
         }
