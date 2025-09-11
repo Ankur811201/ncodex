@@ -5,6 +5,8 @@ const downloadBtn = document.getElementById("downloadBtn");
 const pageListDiv = document.getElementById("pageList");
 const fileName =document.getElementById('filename');
 const Elementtarget =document.querySelector('.element-target');
+const EditFunDiv = document.querySelector('.edit-funtion');
+
 
 let fileMap = {}; // path -> File
 let blobToPathMap = new Map(); // blobURL -> original path
@@ -126,6 +128,17 @@ function loadHTML(path) {
             const elements = collectElements(parent, doc);
             let textNodes = getTextNodes(parent);
 
+            
+
+             if(textNodes.length === 0&&elements.length != 0){
+                
+                EditFunDiv.querySelector('.img').click();
+
+               }else{ EditFunDiv.querySelector('.text').click();
+
+
+               }
+
             elements.forEach(({ el, src, type }) => {
                 createImageEditor(el, src, type, showImg, doc);
             });
@@ -155,7 +168,7 @@ function loadHTML(path) {
             // Apply new style
             tag.style.outline = '2px solid blue';
 
-            console.log('Radio checked for:', tag.textContent.trim());
+            
         } else {
             // When deselected, restore old style
             if (currentTextSelection === tag && oldTextSelection !== null) {
@@ -187,6 +200,7 @@ function loadHTML(path) {
         checkbox.checked = true;
         checkbox.dispatchEvent(new Event('change'));
     }
+              
                 
                 div.appendChild(input);
                 div.appendChild(checkbox);
@@ -275,6 +289,21 @@ function loadHTML(path) {
         return nodes;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function editfun(a,b,el){
