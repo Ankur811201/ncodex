@@ -378,7 +378,7 @@ saveBtn.addEventListener("click", () => {
     const doc = iframe.contentDocument || iframe.contentWindow.document;
     const editedHTML = doc.documentElement.outerHTML;
     savedPages.set(currentPagePath, editedHTML);
-    alert(currentPagePath + " saved successfully!");
+    console.log(currentPagePath + " saved successfully!");
     checkDownloadStatus();
     
 });
