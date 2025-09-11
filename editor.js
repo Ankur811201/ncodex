@@ -14,6 +14,7 @@ const beforeUpload =document.querySelector('.before-upload');
 const errorUpload =document.querySelector('.error-container');
 
 
+
 let fileMap = {}; // path -> File
 let blobToPathMap = new Map(); // blobURL -> original path
 let cssBlobToPathMap = new Map(); // blobURL -> original path for CSS
@@ -45,6 +46,10 @@ themeToggle.addEventListener('click', () => {
         localStorage.setItem('theme', 'dark');
     }
 });
+
+//drag and drop function 
+
+
 
 
 
@@ -422,13 +427,12 @@ document.getElementById("folderInput").addEventListener("change", async (e) => {
 
 });
 
-iframe.onload = () =>{
-     setTimeout(() => {
-         loader.style.display = 'none';
- 
-    
-}, 4000);
-}
+iframe.addEventListener('load', () => {
+    setTimeout(() => {
+        loader.style.display = 'none';
+    }, 4000); 
+});
+
 // Save button handler
 saveBtn.addEventListener("click", () => {
     const doc = iframe.contentDocument || iframe.contentWindow.document;
@@ -486,4 +490,35 @@ downloadBtn.addEventListener("click", async () => {
     a.href = URL.createObjectURL(content);
     a.download = "website.zip";
     a.click();
+
+        let btn = document.getElementById('downloadBtn');
+            let btnText = document.getElementById('btnText');
+            let progressBar = document.getElementById('progressBar');
+
+            // Add downloading state
+            btn.classList.add('downloading');
+            btnText.textContent = 'Downloading...';
+
+            // Simulate download progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    // Show completion state
+                    btnText.textContent = 'Downloaded!';
+                    
+                    setTimeout(() => {
+                        // Reset button
+                        btn.classList.remove('downloading');
+                        btnText.textContent = 'Download ZIP';
+                        progressBar.style.width = '0%';
+                    }, 2000);
+                }
+            }, 100);
 });
