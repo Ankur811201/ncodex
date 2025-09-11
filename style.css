@@ -4,6 +4,7 @@
  --sec-color-dark:#20235a;
  --text-color:black;
  --bg-color:white;
+ --svg-color:white;
 
 }
 [data-theme="dark"] {
@@ -11,6 +12,7 @@
   --sec-color-dark:#20232a;
   --text-color:white;
   --bg-color:#dddddd;
+  --svg-color:yellow;
 
 
     }
@@ -27,17 +29,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background-color 0.3s ease;
+      transition: all .5s ease;
     }
-
+    .theme-toggle svg{stroke: var(--svg-color);}
+    .themebox{
+      transform: rotate(180deg);
+      transition: .5s ease;
+    }
     .sun-and-moon {
       width: 24px;
       height: 24px;
       transition: transform 0.3s ease;
     }
     .moon{display: none;
-      scale: 0.5;
-      rotate: -20deg;
+      
+      
+     
     
     }
     
@@ -48,6 +55,11 @@
        [data-theme="dark"] .moon{
         display: block;
        }
+  
+    [data-theme="dark"] .themebox{
+      transform: none;
+    }
+
 
 
 /* For Firefox */
@@ -120,6 +132,52 @@
     background: var(--bg-color);
     
     }
+    .iframeload{
+      height: 100%;width: 100%;
+      position: absolute;background: rgb(195, 255, 212);
+      top: 0;
+      left: 0;
+      z-index: 10;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 100px 200px;
+
+    }
+     .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #ddd;
+            position: relative;
+        }
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #4caf50;
+            transition: width 3s ease;
+        }
+        .steps {
+            padding: 20px;
+        }
+        .step {
+            opacity: 0.4;
+            transition: opacity 0.5s, transform 0.5s;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #ccc;
+        }
+        .step.active {
+            opacity: 1;
+            transform: translateX(5px);
+            border-left-color: #4caf50;
+            font-weight: 600;
+        }
+        .completed {
+            text-align: center;
+            color: #4caf50;
+            font-weight: bold;
+        }
 
     
     .edit-funtion > div {overflow-y: scroll;}
@@ -217,7 +275,7 @@
       flex: 1;
       background: var(--bg-color);
       border-radius: 8px;
-      
+      position: relative;
       padding: 2px;
     }
 

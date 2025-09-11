@@ -6,6 +6,9 @@ const pageListDiv = document.getElementById("pageList");
 const fileName =document.getElementById('filename');
 const Elementtarget =document.querySelector('.element-target');
 const EditFunDiv = document.querySelector('.edit-funtion');
+const loader = document.querySelector('.iframeload');
+const progress = document.getElementById('progress');
+const steps = document.querySelectorAll('.step');
 
 
 let fileMap = {}; // path -> File
@@ -346,6 +349,31 @@ function checkDownloadStatus() {
 
 // Folder upload handler
 document.getElementById("folderInput").addEventListener("change", async (e) => {
+    loader.style.display = 'flex';
+   
+            progress.style.width = '0%';
+            steps.forEach(s => s.classList.remove('active'));
+            let index = 0;
+            steps[index].classList.add('active');
+
+            let progressValue = 100;
+            const interval = setInterval(() => {
+                // Update progress bar
+                
+                if (progressValue > 100) progressValue = 100;
+                progress.style.width = progressValue + '%';
+
+                // Update steps
+                steps[index].classList.remove('active');
+                index++;
+                if (index < steps.length) {
+                    steps[index].classList.add('active');
+                } else {
+                    clearInterval(interval);
+                     loader.style.display = 'none';
+                    
+                }
+            }, 1000);
   
     const files = e.target.files;
     for (let file of files) fileMap[file.webkitRelativePath] = file;
@@ -362,6 +390,15 @@ document.getElementById("folderInput").addEventListener("change", async (e) => {
     document.querySelectorAll('#pageList > div').forEach(d => d.classList.remove('activeFile'));
     this.classList.add('activeFile');
     loadHTML(p);
+    loader.style.display = 'none';
+
+            
+            
+            
+
+           
+       
+
 });
 
 
