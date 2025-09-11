@@ -109,7 +109,7 @@ function loadHTML(path) {
 
     iframe.onload = () => {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
-        saveBtn.click();
+        
 
         // Clear old handler
         if (doc.body._clickHandler) {
@@ -150,6 +150,7 @@ function loadHTML(path) {
                 const checkbox = document.createElement('input');
                 checkbox.type = 'radio';
                 checkbox.name = 'edit-type';
+                   checkDownloadStatus();
 
                    checkbox.addEventListener('change', () => {
 
@@ -357,6 +358,7 @@ document.getElementById("folderInput").addEventListener("change", async (e) => {
         const btn = document.createElement('div');
         btn.textContent = p.substring(p.lastIndexOf("/") + 1);
      btn.addEventListener('click', function() {
+        saveBtn.click();
     document.querySelectorAll('#pageList > div').forEach(d => d.classList.remove('activeFile'));
     this.classList.add('activeFile');
     loadHTML(p);
@@ -377,6 +379,7 @@ saveBtn.addEventListener("click", () => {
     const editedHTML = doc.documentElement.outerHTML;
     savedPages.set(currentPagePath, editedHTML);
     alert(currentPagePath + " saved successfully!");
+    checkDownloadStatus();
     
 });
 
