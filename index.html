@@ -552,7 +552,7 @@
         <div class="container">
             <h1>Edit, Upload & Download Websites – No Coding Required</h1>
             <p>nocodo empowers developers and freelancers to manage websites easily and professionally.</p>
-            <a href="webtool.html" class="cta-button">Start Editing for Free</a>
+            <a href="#" class="cta-button">Start Editing for Free</a>
         </div>
         <div class="wave"></div>
     </section>
@@ -823,6 +823,23 @@
             }
         `;
         document.head.appendChild(style);
+
+
+        const cbutton = document.querySelector('.cta-button');
+
+        cbutton.addEventListener('click', function(e) {
+            e.preventDefault();
+            setTimeout(() => {
+                window.open('webtool.html', '_blank')
+               
+            }, 1000);
+            
+
+        });
+
+
+
+
     </script>
 </body>
 </html>

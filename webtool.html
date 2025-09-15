@@ -5,6 +5,7 @@
     <head>
         <title>Edit no code</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="editStyle.css">
 
     </head>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
@@ -24,7 +25,10 @@
             
             </div>
             <button id="saveBtn"  style="display: none;">Save Page</button>
- <button class="download-btn btn-variant-2" id="downloadBtn" onclick="downloadZip()">
+
+          </div> 
+         <div class="download-main-container"> <div class="download-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M352 96C352 78.3 337.7 64 320 64C302.3 64 288 78.3 288 96L288 306.7L246.6 265.3C234.1 252.8 213.8 252.8 201.3 265.3C188.8 277.8 188.8 298.1 201.3 310.6L297.3 406.6C309.8 419.1 330.1 419.1 342.6 406.6L438.6 310.6C451.1 298.1 451.1 277.8 438.6 265.3C426.1 252.8 405.8 252.8 393.3 265.3L352 306.7L352 96zM160 384C124.7 384 96 412.7 96 448L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 448C544 412.7 515.3 384 480 384L433.1 384L376.5 440.6C345.3 471.8 294.6 471.8 263.4 440.6L206.9 384L160 384zM464 440C477.3 440 488 450.7 488 464C488 477.3 477.3 488 464 488C450.7 488 440 477.3 440 464C440 450.7 450.7 440 464 440z"/></svg> </div>
+  <div class="download-box"><button class="download-btn " id="downloadBtn" onclick="downloadZip()" >
     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <polyline points="7,10 12,15 17,10"/>
@@ -32,7 +36,7 @@
     </svg>
     <span id="btnText">Download ZIP</span>
     <div class="progress-bar" id="progressBar"></div>
-</button>
+</button></div></div>
 
         </nav>
 
@@ -47,10 +51,61 @@
             </div>
             <div class="edit-funtion">
                 <div>
-                    <h3><button class="text active" onclick="editfun('showDataEdit','showimg',this)">Text</button><button class="img" onclick="editfun('showimg','showDataEdit',this)">image</button> </h3>
+                    <h3><button class="text active" onclick="editfun('showDataEdit',this)">Text</button><button class="img" onclick="editfun('showimg',this)">image</button> <button onclick="editfun('showstyle',this)" class="style">Style</button></h3>
 
                     <div id="showDataEdit"></div>  
                       <div id="showimg"></div> 
+                      <div id="showstyle" >
+                        <h3>Font Style <div class="up" onclick="fontStyleUp()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M160 416C147.1 416 135.4 408.2 130.4 396.2C125.4 384.2 128.2 370.5 137.4 361.4L297.4 201.4C309.9 188.9 330.2 188.9 342.7 201.4L502.7 361.4C511.9 370.6 514.6 384.3 509.6 396.3C504.6 408.3 492.9 416 480 416L160 416z"/></svg></div></h3>
+                      <div class="font-toolbar">
+                          <div class="font-style">
+  <select class="font-family" title="Font Family">
+    <option >No Selected</option>
+    <option style="font-family:Arial;">Arial</option>
+  <option style="font-family:'Arial Black';">Arial Black</option>
+  <option style="font-family:Verdana;">Verdana</option>
+  <option style="font-family:Tahoma;">Tahoma</option>
+  <option style="font-family:'Trebuchet MS';">Trebuchet MS</option>
+  <option style="font-family:Impact;">Impact</option>
+  <option style="font-family:'Times New Roman';">Times New Roman</option>
+  <option style="font-family:Georgia;">Georgia</option>
+  <option style="font-family:'Palatino Linotype';">Palatino Linotype</option>
+  <option style="font-family:'Book Antiqua';">Book Antiqua</option>
+  <option style="font-family:'Courier New';">Courier New</option>
+  <option style="font-family:'Lucida Console';">Lucida Console</option>
+  <option style="font-family:'Lucida Sans Unicode';">Lucida Sans Unicode</option>
+  <option style="font-family:'Comic Sans MS';">Comic Sans MS</option>
+  <option style="font-family:Helvetica;">Helvetica</option>
+  <option style="font-family:'Gill Sans';">Gill Sans</option>
+  <option style="font-family:'Franklin Gothic Medium';">Franklin Gothic Medium</option>
+  <option style="font-family:'Segoe UI';">Segoe UI</option>
+  <option style="font-family:Cambria;">Cambria</option>
+  <option style="font-family:Calibri;">Calibri</option>
+  <option style="font-family:Consolas;">Consolas</option>
+  <option style="font-family:Monaco;">Monaco</option>
+  <option style="font-family:Optima;">Optima</option>
+  <option style="font-family:Didot;">Didot</option>
+  <option style="font-family:Garamond;">Garamond</option>
+  <option style="font-family:'Century Gothic';">Century Gothic</option>
+  <option style="font-family:Rockwell;">Rockwell</option>
+  <option style="font-family:Bookman;">Bookman</option>
+  <option style="font-family:'Lucida Bright';">Lucida Bright</option>
+  <option style="font-family:Geneva;">Geneva</option>
+  <option style="font-family:Futura;">Futura</option>
+  </select>
+
+  <input type="number" class="font-size" min="8" max="72" title="Font Size"></div>
+  
+
+ <div> <input type="color" class="text-color" title="Text Color">
+ <button class="btn bold" title="Bold"><strong>B</strong></button>
+  <button class="btn italic" title="Italic"><em>I</em></button>
+  <button class="btn underline" title="Underline"><u>U</u></button>
+
+  
+  <input type="color" class="bg-color" title="Highlight"></div>
+</div>
+                      </div>
                    
                     
 
@@ -118,6 +173,7 @@
 
 
       <script src="editor.js"></script>
+      <script src="editFuntion.js"></script>
     </body>
 
 

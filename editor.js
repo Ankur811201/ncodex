@@ -25,6 +25,8 @@ let currentPagePath = "";
 let currentEdits = new Map(); // path -> edited HTML for unsaved changes
 let currentTextSelection = null;
 let oldTextSelection = null;
+let tag = null; // currently selected element for editing
+
 
 const themeToggle = document.getElementById('theme-toggle');
 const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -138,7 +140,7 @@ function loadHTML(path) {
             showImg.innerHTML = "";
             container.innerHTML = "";
             Elementtarget.innerHTML = parent.tagName.toLowerCase() + ' | ' + (parent.className || 'no-class') + ' | ' + (parent.id || 'no-id');
-
+           
             // Collect images and backgrounds
             const elements = collectElements(parent, doc);
             let textNodes = getTextNodes(parent);
@@ -149,7 +151,7 @@ function loadHTML(path) {
 
                 EditFunDiv.querySelector('.img').click();
 
-            } else {
+            } else if(textNodes.length != 0 && elements.length === 0) {
                 EditFunDiv.querySelector('.text').click();
 
 
@@ -175,13 +177,14 @@ function loadHTML(path) {
 
                 checkbox.addEventListener('change', () => {
 
-                    let tag = tn.parentNode; // target element
+                  tag = tn.parentNode; // target element
 
                     if (checkbox.checked) {
                         // Restore previous selection if any
                         if (currentTextSelection && oldTextSelection !== null) {
                             currentTextSelection.style.outline = oldTextSelection;
                         }
+                        sendElement(tag);
 
                         // Store current selection and its old style
                         currentTextSelection = tag;
@@ -189,6 +192,9 @@ function loadHTML(path) {
 
                         // Apply new style
                         tag.style.outline = '2px solid blue';
+                        
+                       
+                        
 
 
                     } else {
@@ -214,9 +220,16 @@ function loadHTML(path) {
                     currentEdits.set(currentPagePath, doc.documentElement.outerHTML);
                     checkDownloadStatus();
                 });
+               input.addEventListener('focus', () => {
+                if( !checkbox.checked){
+    checkbox.checked = true;
+    checkbox.dispatchEvent(new Event('change'));
+                }
+});
+
 
                 if (textNodes.length === 1) {
-                    checkbox.checked = true;
+                    
                     checkbox.dispatchEvent(new Event('change'));
                     setTimeout(() => input.focus(), 0);
                 }
@@ -318,17 +331,7 @@ function loadHTML(path) {
 
 
 
-function editfun(a, b, el) {
-    document.getElementById(b).style.display = 'none';
-    document.getElementById(a).style.display = 'grid';
-    document.querySelector('.text').classList.remove('active');
-    document.querySelector('.img').classList.remove('active');
-    el.classList.add('active');
 
-
-
-
-}
 
 
 
@@ -352,6 +355,8 @@ document.getElementById("folderInput").addEventListener("change", async (e) => {
     loader.style.display = 'flex';
      errorUpload.style.display = "none";
      iframe.srcdoc = '';
+
+     downloadBtn.style.display= 'flex-inline';
      
 
 
