@@ -480,11 +480,12 @@
     bottom: -80px;
     transition: bottom 0.3s ease;
     width: 100%;
+    left: 0;
 }
 #showstyle .up{
     position: absolute;
     right: 30px;
-    transition: all 0.3s ease;
+   
     
     background: var(--bg-secondary);
     width: 30px;
@@ -497,6 +498,7 @@
 }
 #showstyle .up svg {
     fill: var(--text-color);
+     transition: all 0.3s ease;
     
 }
 

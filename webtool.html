@@ -51,7 +51,7 @@
             </div>
             <div class="edit-funtion">
                 <div>
-                    <h3><button class="text active" onclick="editfun('showDataEdit',this)">Text</button><button class="img" onclick="editfun('showimg',this)">image</button> <button onclick="editfun('showstyle',this)" class="style">Style</button></h3>
+                    <h3><button class="text active" onclick="editfun('showDataEdit',this)">Text</button><button class="img" onclick="editfun('showimg',this)">image</button> </h3>
 
                     <div id="showDataEdit"></div>  
                       <div id="showimg"></div> 
@@ -94,10 +94,19 @@
   <option style="font-family:Futura;">Futura</option>
   </select>
 
-  <input type="number" class="font-size" min="8" max="72" title="Font Size"></div>
+  <input type="number" class="font-size" min="8" max="72" title="Font Size" placeholder="F size"></div>
   
 
  <div> <input type="color" class="text-color" title="Text Color">
+  <select class="font-case" title="Font Case">
+    <option value="none">None</option>
+    <option value="uppercase">UPPER</option>
+    <option value="lowercase">lower</option>
+    <option value="capitalize">Capit</option>
+    
+
+
+  </select>
  <button class="btn bold" title="Bold"><strong>B</strong></button>
   <button class="btn italic" title="Italic"><em>I</em></button>
   <button class="btn underline" title="Underline"><u>U</u></button>

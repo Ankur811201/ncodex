@@ -7,6 +7,7 @@ const italicBtn = document.querySelector('.italic');
 const underlineBtn = document.querySelector('.underline');
 const fontFamily = document.querySelector('.font-family');
 const fontClassList = document.querySelector('.font-class-list');
+const fontCase = document.querySelector('.font-case');
 
 let selectedElement = null;
 
@@ -67,6 +68,7 @@ function sendElement(tag){
             fontFamily.value = style.fontFamily;}
 
   fontSize.value = parseInt(style.fontSize);
+  fontCase.value = (style.textTransform === ""&&style.textTransform === "none") ? "none" : style.textTransform;
   textColor.value = rgbToHex(style.color);
   bgColor.value = rgbToHex(style.backgroundColor);
   console.log(style.fontSize, style.color, style.backgroundColor);
@@ -91,6 +93,9 @@ textColor.addEventListener('input', () => {
 
 bgColor.addEventListener('input', () => {
     applyStyle('backgroundColor', bgColor.value);
+});
+fontCase.addEventListener('input', () => {
+    applyStyle('textTransform', fontCase.value);
 });
 
 
@@ -127,10 +132,10 @@ function applyStyle(property, value){
 function fontStyleUp(){
   if( showStyle.style.bottom == '-80px'){ 
          showStyle.style.bottom ='0px' ;
-         showStyle.querySelector('.up').style.transform ='rotate(180deg)';
+         showStyle.querySelector('svg').style.transform ='rotate(180deg)';
          }else{
         showStyle.style.bottom ='-80px' ;
-        showStyle.querySelector('.up').style.transform ='rotate(0deg)';
+        showStyle.querySelector('svg').style.transform ='rotate(0deg)';
     }
 
 
@@ -140,12 +145,16 @@ function fontStyleUp(){
 function editfun(a, el) {
     document.getElementById("showDataEdit").style.display = 'none';
     document.getElementById("showimg").style.display = 'none';
+    document.getElementById("showstyle").style.display = 'none';
     
 
     document.getElementById(a).style.display = 'grid';
+    if(a=='showDataEdit'){
+        document.getElementById("showstyle").style.display = 'block';
+    }
     document.querySelector('.text').classList.remove('active');
     document.querySelector('.img').classList.remove('active');
-    document.querySelector('.style').classList.remove('active');
+   
     el.classList.add('active');
 
 

@@ -172,6 +172,7 @@ function loadHTML(path) {
                 const checkbox = document.createElement('input');
                 checkbox.type = 'radio';
                 checkbox.name = 'edit-type';
+                checkbox.style= 'display:none';
                 checkDownloadStatus();
 
 
