@@ -143,6 +143,7 @@
             height: 100%;
             fill: var(--text-color);
         }
+         
         .download-main-container:hover >
         .download-box{ display: block;}
 
@@ -475,32 +476,7 @@
         .sec-nav li.active::before {
             transform: scaleY(1);
         }
-#showstyle{
-    position: absolute;
-    bottom: -80px;
-    transition: bottom 0.3s ease;
-    width: 100%;
-    left: 0;
-}
-#showstyle .up{
-    position: absolute;
-    right: 30px;
-   
-    
-    background: var(--bg-secondary);
-    width: 30px;
-    height: 30px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    border: 1px solid var(--border-color);
 
-}
-#showstyle .up svg {
-    fill: var(--text-color);
-     transition: all 0.3s ease;
-    
-}
 
         /* Edit Panel */
         .edit-funtion {
@@ -616,6 +592,8 @@
             max-width: 400px;
             border: 2px dashed var(--border-color);
             transition: all 0.3s ease;
+            resize: both;
+            overflow: auto;
         }
 
         .before-upload:hover {

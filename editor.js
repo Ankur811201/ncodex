@@ -284,40 +284,7 @@ function loadHTML(path) {
         return list;
     }
 
-    function createImageEditor(el, src, type, container, doc) {
-
-
-        const preview = document.createElement('img');
-        preview.src = src;
-        preview.style.cssText = 'max-width:100px;margin:5px;border:1px solid #272727ff;';
-
-        preview.addEventListener('click', () => {
-            input.click(); // Opens file chooser
-        });
-
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.style.display = 'none';
-        input.accept = 'image/*';
-        input.addEventListener('change', ev => {
-            const file = ev.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = event => {
-                    const dataUrl = event.target.result;
-                    preview.src = dataUrl;
-                    if (type === 'img') el.src = dataUrl;
-                    else el.style.backgroundImage = `url("${dataUrl}")`;
-                    currentEdits.set(currentPagePath, doc.documentElement.outerHTML);
-                    checkDownloadStatus();
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-
-        container.appendChild(preview);
-    }
+    
 
     function getTextNodes(node) {
         let nodes = [];

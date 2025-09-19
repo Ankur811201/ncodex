@@ -1,4 +1,4 @@
-const showStyle=  document.getElementById("showstyle");
+
 const fontSize = document.querySelector('.font-size');
 const textColor = document.querySelector('.text-color');
 const bgColor = document.querySelector('.bg-color');
@@ -8,6 +8,9 @@ const underlineBtn = document.querySelector('.underline');
 const fontFamily = document.querySelector('.font-family');
 const fontClassList = document.querySelector('.font-class-list');
 const fontCase = document.querySelector('.font-case');
+const uploadImg = document.querySelector('#uploadImg');
+const imgOption = document.querySelector('#imgOption');
+const showStyle = document.getElementById('showstyle');
 
 let selectedElement = null;
 
@@ -71,7 +74,7 @@ function sendElement(tag){
   fontCase.value = (style.textTransform === ""&&style.textTransform === "none") ? "none" : style.textTransform;
   textColor.value = rgbToHex(style.color);
   bgColor.value = rgbToHex(style.backgroundColor);
-  console.log(style.fontSize, style.color, style.backgroundColor);
+  
   boldBtn.classList.toggle('active', style.fontWeight === "700" || style.fontWeight === "bold");
   italicBtn.classList.toggle('active', style.fontStyle === "italic");
   underlineBtn.classList.toggle('active', style.textDecoration.includes("underline"));
@@ -129,7 +132,75 @@ function applyStyle(property, value){
 }
 
 
-function fontStyleUp(){
+
+
+
+function createImageEditor(el, src, type, container, doc) {
+
+
+        const preview = document.createElement('img');
+        preview.src = src;
+        preview.className='preview';
+        preview.style.cssText = 'max-width:100px;margin:5px;border:1px solid #272727ff;';
+        
+
+        preview.addEventListener('click', () => {
+            ;// Opens file chooser
+             imgOption.style.bottom ='0px' 
+             
+             document.querySelectorAll('.preview').forEach(e =>{
+            e.style.border='none';
+        })
+        console.log(el.parentNode.style);
+             preview.style.border='2px solid black';
+    
+        
+
+    
+        });
+        uploadImg.addEventListener('click', ()=>{
+            if(preview.style.border=='2px solid black'){
+            input.click();}
+            preview.style.border='none';
+        })
+
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.style.display = 'none';
+        input.accept = 'image/*';
+        input.addEventListener('change', ev => {
+            const file = ev.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = event => {
+                    const dataUrl = event.target.result;
+                    preview.src = dataUrl;
+                    if (type === 'img') el.src = dataUrl;
+                    else el.style.backgroundImage = `url("${dataUrl}")`;
+                    currentEdits.set(currentPagePath, doc.documentElement.outerHTML);
+                    checkDownloadStatus();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+
+        container.appendChild(preview);
+    }
+
+function sendData(a){
+    imgOption.style.bottom ='0px' 
+    uploadImg.addEventListener('click', ()=>{
+        a.click();
+
+    })
+    
+    
+
+}
+
+function Up(fontImg){
+    let showStyle=  document.getElementById(fontImg);
   if( showStyle.style.bottom == '-80px'){ 
          showStyle.style.bottom ='0px' ;
          showStyle.querySelector('svg').style.transform ='rotate(180deg)';
@@ -146,11 +217,14 @@ function editfun(a, el) {
     document.getElementById("showDataEdit").style.display = 'none';
     document.getElementById("showimg").style.display = 'none';
     document.getElementById("showstyle").style.display = 'none';
+    document.getElementById("imgOption").style.display = 'none';
     
 
     document.getElementById(a).style.display = 'grid';
     if(a=='showDataEdit'){
         document.getElementById("showstyle").style.display = 'block';
+    }else{ document.getElementById("imgOption").style.display = 'block';
+
     }
     document.querySelector('.text').classList.remove('active');
     document.querySelector('.img').classList.remove('active');
@@ -161,3 +235,19 @@ function editfun(a, el) {
 
 
 }
+
+ iframe.onload = () => {
+        document.querySelector('.preview-iframe').classList.remove('disable');
+        document.querySelector('.download-main-container').classList.remove('disable');
+     }
+
+document.querySelector('.preview-iframe').addEventListener('click',()=>{
+     if (!document.fullscreenElement) {
+    document.querySelector('#iframe').requestFullscreen();   // enter fullscreen
+  } else {
+    document.exitFullscreen();    // exit fullscreen
+  }
+})
+    
+
+   

@@ -1,3 +1,32 @@
+#showstyle{
+    position: absolute;
+    bottom: -80px;
+    transition: bottom 0.3s ease;
+    width: 100%;
+    left: 0;
+    
+}
+#showstyle .up{
+    position: absolute;
+    right: 30px;
+   
+    
+    background: var(--bg-secondary);
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    border: 1px solid var(--border-color);
+
+}
+#showstyle .up svg {
+    fill: var(--text-color);
+     transition: all 0.3s ease;
+    
+}
+
+
 .font-toolbar {
   display: flex;
   flex-direction: column;
@@ -34,4 +63,92 @@
 
 .font-toolbar button.btn:hover {
   background: #e0e0e0;
+}
+
+
+.img-toolbar {
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: #f3f3f3;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+
+}
+#imgOption{
+    position: absolute;
+    bottom: -80px;
+    transition: bottom 0.3s ease;
+    width: 100%;
+    left: 0;
+    display: none;
+}
+#imgOption .up{
+    position: absolute;
+    right: 30px;
+   
+    
+    background: var(--bg-secondary);
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    border: 1px solid var(--border-color);
+
+}
+#imgOption .up svg {
+    fill: var(--text-color);
+     transition: all 0.3s ease;
+    
+}
+.img-toolbar>div{
+    display: flex;
+    flex-direction: row;
+}
+.img-replace{  
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-inline: 10px;
+            color: #223;
+           
+           height: 50px;
+           width: 50px;
+            border: 1px solid black;
+            font-weight: 100;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+           
+
+
+}
+.disable{
+  pointer-events: none;opacity: 0.3;
+}
+
+.preview-iframe{
+   
+    width: 30px;
+    height: 30px;
+    background: var(--bg-secondary);
+   border: 1px solid var(--border-color);
+    
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+   
+  
+}
+.preview-iframe svg {
+    fill: var(--text-color);
+     transition: all 0.3s ease;
+    
 }

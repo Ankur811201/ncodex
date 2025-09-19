@@ -27,7 +27,7 @@
             <button id="saveBtn"  style="display: none;">Save Page</button>
 
           </div> 
-         <div class="download-main-container"> <div class="download-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M352 96C352 78.3 337.7 64 320 64C302.3 64 288 78.3 288 96L288 306.7L246.6 265.3C234.1 252.8 213.8 252.8 201.3 265.3C188.8 277.8 188.8 298.1 201.3 310.6L297.3 406.6C309.8 419.1 330.1 419.1 342.6 406.6L438.6 310.6C451.1 298.1 451.1 277.8 438.6 265.3C426.1 252.8 405.8 252.8 393.3 265.3L352 306.7L352 96zM160 384C124.7 384 96 412.7 96 448L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 448C544 412.7 515.3 384 480 384L433.1 384L376.5 440.6C345.3 471.8 294.6 471.8 263.4 440.6L206.9 384L160 384zM464 440C477.3 440 488 450.7 488 464C488 477.3 477.3 488 464 488C450.7 488 440 477.3 440 464C440 450.7 450.7 440 464 440z"/></svg> </div>
+         <div class="download-main-container disable"> <div class="download-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M352 96C352 78.3 337.7 64 320 64C302.3 64 288 78.3 288 96L288 306.7L246.6 265.3C234.1 252.8 213.8 252.8 201.3 265.3C188.8 277.8 188.8 298.1 201.3 310.6L297.3 406.6C309.8 419.1 330.1 419.1 342.6 406.6L438.6 310.6C451.1 298.1 451.1 277.8 438.6 265.3C426.1 252.8 405.8 252.8 393.3 265.3L352 306.7L352 96zM160 384C124.7 384 96 412.7 96 448L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 448C544 412.7 515.3 384 480 384L433.1 384L376.5 440.6C345.3 471.8 294.6 471.8 263.4 440.6L206.9 384L160 384zM464 440C477.3 440 488 450.7 488 464C488 477.3 477.3 488 464 488C450.7 488 440 477.3 440 464C440 450.7 450.7 440 464 440z"/></svg> </div>
   <div class="download-box"><button class="download-btn " id="downloadBtn" onclick="downloadZip()" >
     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -56,7 +56,7 @@
                     <div id="showDataEdit"></div>  
                       <div id="showimg"></div> 
                       <div id="showstyle" >
-                        <h3>Font Style <div class="up" onclick="fontStyleUp()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M160 416C147.1 416 135.4 408.2 130.4 396.2C125.4 384.2 128.2 370.5 137.4 361.4L297.4 201.4C309.9 188.9 330.2 188.9 342.7 201.4L502.7 361.4C511.9 370.6 514.6 384.3 509.6 396.3C504.6 408.3 492.9 416 480 416L160 416z"/></svg></div></h3>
+                        <h3>Font Style <div class="up" onclick="Up('showstyle')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M160 416C147.1 416 135.4 408.2 130.4 396.2C125.4 384.2 128.2 370.5 137.4 361.4L297.4 201.4C309.9 188.9 330.2 188.9 342.7 201.4L502.7 361.4C511.9 370.6 514.6 384.3 509.6 396.3C504.6 408.3 492.9 416 480 416L160 416z"/></svg></div></h3>
                       <div class="font-toolbar">
                           <div class="font-style">
   <select class="font-family" title="Font Family">
@@ -115,6 +115,23 @@
   <input type="color" class="bg-color" title="Highlight"></div>
 </div>
                       </div>
+                      <div class="img-option">
+
+                        </div>
+<div class="img-option" id="imgOption">
+  <h3>Image Options
+    <div class="up" onclick="Up('imgOption')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M160 416C147.1 416 135.4 408.2 130.4 396.2C125.4 384.2 128.2 370.5 137.4 361.4L297.4 201.4C309.9 188.9 330.2 188.9 342.7 201.4L502.7 361.4C511.9 370.6 514.6 384.3 509.6 396.3C504.6 408.3 492.9 416 480 416L160 416z"/></svg>
+    </div>
+  </h3>
+  <div class="img-toolbar">
+   <div> <button class=" img-replace" title="Replace Image" id="uploadImg">+</button>
+    <button class=" img-remove" title="Remove Image">Remove</button></div>
+    <div>
+    <input type="number" class="img-height" placeholder="height" title="Image Height"></div>
+    <!-- Add more image controls as needed -->
+  </div>
+                      </div>
                    
                     
 
@@ -136,8 +153,13 @@
                     
                     </div>
                     <div class="element-target"></div>
+                    <div class="preview-iframe disable" title="preview" >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <polygon points="30,20 80,50 30,80" />
+</svg>
+ </div>
                     </div>
-                <div class="show-web">
+                   <div class="show-web">
                     
                     <div class="iframeload">
                         <div class="after-upload">
